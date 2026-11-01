@@ -1,0 +1,256 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+  --color-bg: #eef5f1;
+  --color-surface: #ffffff;
+  --color-surface-2: #f5faf7;
+  --color-line: #d8e7df;
+  --color-line-strong: #c3d9ce;
+  --color-ink: #0e241b;
+  --color-muted: #5c776c;
+  --color-faint: #6b8579;
+
+  --color-primary: #0f7a5a;
+  --color-primary-dark: #0a5c44;
+  --color-primary-soft: #e0f4ec;
+  --color-primary-line: #b6e6d5;
+
+  --color-ok: #0f7a5a;
+  --color-ok-soft: #e0f4ec;
+  --color-warn: #8a5a00;
+  --color-warn-soft: #fff6dd;
+  --color-warn-line: #f0cf74;
+  --color-danger: #b93434;
+  --color-danger-soft: #fdecec;
+  --color-danger-line: #f3c3c3;
+
+  --color-temp: #dd5f38;
+  --color-hum: #2f7fbf;
+  --color-vpd: #7c5cd6;
+  --color-soil: #9a6a25;
+  --color-etc: #a87f0a;
+  --color-dose: #0e7c86;
+
+  --color-sidebar: #07251c;
+  --color-sidebar-2: #0b3b2e;
+  --color-sidebar-line: #1a4d3d;
+
+  --shadow-card: 0 1px 2px rgb(14 36 27 / 0.04), 0 8px 24px -18px rgb(14 36 27 / 0.35);
+  --shadow-float: 0 18px 50px -20px rgb(7 37 28 / 0.45);
+}
+
+html {
+  color-scheme: light;
+}
+
+html.dark {
+  color-scheme: dark;
+  --color-bg: #06130f;
+  --color-surface: #0c2119;
+  --color-surface-2: #102b21;
+  --color-line: #1e3d30;
+  --color-line-strong: #2a4f40;
+  --color-ink: #e7f3ed;
+  --color-muted: #9db6aa;
+  --color-faint: #7f9c8f;
+
+  --color-primary: #34c59a;
+  --color-primary-dark: #7ce3bf;
+  --color-primary-soft: #103027;
+  --color-primary-line: #1d5a47;
+
+  --color-ok: #45d6a7;
+  --color-ok-soft: #103027;
+  --color-warn: #f4c15d;
+  --color-warn-soft: #2b2110;
+  --color-warn-line: #5e4a1c;
+  --color-danger: #ff7d7d;
+  --color-danger-soft: #2c1517;
+  --color-danger-line: #5c2a2d;
+
+  --color-temp: #ff8a62;
+  --color-hum: #6bb8f0;
+  --color-vpd: #b29bff;
+  --color-soil: #d9ab68;
+  --color-etc: #e0bd54;
+  --color-dose: #5ad7df;
+
+  --color-sidebar: #04100c;
+  --color-sidebar-2: #082a20;
+  --color-sidebar-line: #143c2f;
+
+  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.2), 0 12px 30px -22px rgb(0 0 0 / 0.8);
+  --shadow-float: 0 18px 50px -20px rgb(0 0 0 / 0.8);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-line);
+  }
+
+  html,
+  body,
+  #app {
+    min-height: 100%;
+  }
+
+  body {
+    margin: 0;
+    background-color: var(--color-bg);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Teks statis memakai kursor panah; kursor teks hanya di kolom input.
+     Tanpa ini browser menampilkan I-beam di seluruh teks yang bisa dipilih. */
+  html,
+  body {
+    cursor: default;
+  }
+
+  a,
+  button,
+  label,
+  select,
+  summary,
+  [role="button"] {
+    cursor: pointer;
+  }
+
+  input,
+  textarea,
+  [contenteditable="true"] {
+    cursor: text;
+  }
+
+  button:disabled,
+  input:disabled,
+  select:disabled,
+  textarea:disabled {
+    cursor: not-allowed;
+  }
+
+  button,
+  input,
+  select {
+    font: inherit;
+  }
+
+  ::selection {
+    background: var(--color-primary);
+    color: #fff;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+}
+
+@layer components {
+  .card {
+    @apply rounded-2xl border border-line bg-surface shadow-card;
+  }
+
+  .card-pad {
+    @apply p-4 sm:p-5;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-1.5 rounded-xl border border-line bg-surface px-3 py-2 text-[12.5px] font-semibold text-ink transition-colors hover:bg-surface-2 disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  .btn-primary {
+    @apply border-transparent bg-primary text-white hover:bg-primary-dark;
+  }
+
+  .btn-soft {
+    @apply border-transparent bg-primary-soft text-primary-dark hover:bg-primary-line/60;
+  }
+
+  .btn-icon {
+    @apply grid h-9 w-9 shrink-0 place-items-center rounded-xl border border-line bg-surface text-muted transition-colors hover:bg-surface-2 hover:text-ink;
+  }
+
+  .spinner {
+    @apply h-4 w-4 animate-spin rounded-full border-2 border-line border-t-primary;
+  }
+
+  .input {
+    @apply w-full min-w-0 rounded-xl border border-line bg-surface px-3 py-2 text-[13px] text-ink outline-none transition placeholder:text-faint focus:border-primary focus:ring-2 focus:ring-primary/15;
+  }
+
+  .label {
+    @apply mb-1.5 block text-[11.5px] font-semibold text-muted;
+  }
+
+  .pill {
+    @apply inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10.5px] font-bold tracking-wide;
+  }
+
+  .pill-on {
+    @apply bg-primary-soft text-primary-dark;
+  }
+
+  .pill-off {
+    @apply bg-surface-2 text-muted;
+  }
+
+  .pill-warn {
+    @apply bg-warn-soft text-warn;
+  }
+
+  .pill-danger {
+    @apply bg-danger-soft text-danger;
+  }
+
+  .nav-link {
+    @apply flex items-center gap-3 rounded-xl px-3 py-2.5 text-[13px] font-semibold text-white/65 transition-colors hover:bg-white/8 hover:text-white;
+  }
+
+  .nav-link-active {
+    @apply bg-white/12 text-white shadow-[inset_0_1px_0_rgb(255_255_255/0.08)];
+  }
+
+  .seg {
+    @apply flex rounded-xl border border-line bg-surface p-1;
+  }
+
+  .seg-btn {
+    @apply flex-1 rounded-lg px-2 py-1.5 text-[11px] font-bold tracking-wide text-muted transition-colors hover:bg-surface-2 hover:text-ink;
+  }
+
+  .seg-btn-on {
+    @apply bg-primary text-white hover:bg-primary hover:text-white;
+  }
+
+  .seg-btn-off {
+    @apply bg-danger text-white hover:bg-danger hover:text-white;
+  }
+
+  .seg-btn-auto {
+    @apply bg-surface-2 text-primary-dark ring-1 ring-primary-line;
+  }
+
+  .table-cell {
+    @apply whitespace-nowrap border-b border-line px-3 py-2.5;
+  }
+
+  .table-head {
+    @apply whitespace-nowrap border-b border-line bg-surface-2 px-3 py-2.5 text-left text-[10.5px] font-bold uppercase tracking-[0.08em] text-muted;
+  }
+
+  .num {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+/* Scrollbar halus; tetap terlihat agar area tabel yang bisa digeser jelas. */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-line-strong) transparent;
+}
