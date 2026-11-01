@@ -50,14 +50,26 @@ Label zona disimpan di RTDB pada path `labels/{deviceId}`. Penulisan label memer
 
 ## Deploy
 
-Konfigurasi Cloudflare ada di `wrangler.jsonc` dan menggunakan `dist` sebagai asset directory dengan SPA fallback.
+Project ini disiapkan untuk Cloudflare Pages dengan Git integration. Setiap push ke branch `main` akan memicu build dan deploy otomatis.
+
+Pengaturan project di Cloudflare Pages:
+
+- Production branch: `main`
+- Framework preset: `Vite`
+- Build command: `npm run build`
+- Build output directory: `dist`
+- Node.js: `22` (lihat `.nvmrc`)
+
+`public/_redirects` menangani fallback SPA agar route seperti `/log` tidak 404. `public/_headers` berisi header keamanan dan ikut tersalin ke `dist` saat build.
+
+Untuk deploy manual via Wrangler:
 
 ```bash
 npm run build
-npx wrangler deploy
+npx wrangler pages deploy
 ```
 
-Pastikan domain hasil deploy sudah ditambahkan ke **Firebase Authentication → Authorized domains** agar login admin berfungsi.
+Pastikan domain hasil deploy, misalnya `smartgh-manager.pages.dev`, sudah ditambahkan ke **Firebase Authentication → Authorized domains** agar login admin berfungsi.
 
 ## Struktur Singkat
 
