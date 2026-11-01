@@ -58,8 +58,10 @@ Pengaturan project di Cloudflare Pages:
 - Framework preset: `Vite`
 - Build command: `npm run build`
 - Build output directory: `dist`
-- Deploy command: kosongkan (jangan isi `npx wrangler deploy`)
+- Deploy command: tidak ada di project Pages
 - Node.js: `22` (lihat `.nvmrc`)
+
+Pastikan project dibuat lewat jalur **Pages → Connect to Git**, bukan **Worker → Connect to Git**. Jika dashboard meminta **Deploy command**, berarti yang dibuat adalah project Worker, bukan Pages.
 
 `public/_redirects` menangani fallback SPA agar route seperti `/log` tidak 404. `public/_headers` berisi header keamanan dan ikut tersalin ke `dist` saat build.
 
