@@ -5,3 +5,6 @@ dist/
 .env
 .env.*
 .wrangler/
+
+# Konteks proyek bersama: symlink ke ../AGENTS.md di folder Capstone
+AGENTS.md

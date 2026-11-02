@@ -2,6 +2,8 @@
 
 Dashboard web untuk monitoring dan kendali Smart Greenhouse. Data sensor dibaca dari Firebase Realtime Database, dengan kontrol aktuator dan setpoint fase yang hanya bisa dilakukan oleh admin.
 
+Firmware ESP32-nya ada di repo terpisah: [smartgh-firmware](https://github.com/will-zx/smartgh-firmware). Setup RTDB, rules, akun, dan alur kontrol dijelaskan di [`docs/rtdb.md`](docs/rtdb.md).
+
 ## Fitur
 
 - Monitoring metrik sensor: suhu, kelembapan, kadar air tanah, VPD, ETc, dosis irigasi, dan air terpakai.
@@ -56,7 +58,7 @@ Pengaturan project di Cloudflare Pages:
 
 - Production branch: `main`
 - Framework preset: `Vite`
-- Build command: `npm run build`
+- Build command: `npm ci && npm run build`
 - Build output directory: `dist`
 - Deploy command: tidak ada di project Pages
 - Node.js: `22` (lihat `.nvmrc`)
