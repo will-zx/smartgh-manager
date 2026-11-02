@@ -3,7 +3,6 @@ import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
 import {
   CategoryScale,
   Chart,
-  Filler,
   LineController,
   LineElement,
   LinearScale,
@@ -28,7 +27,6 @@ Chart.register(
   LinearScale,
   CategoryScale,
   Tooltip,
-  Filler,
 );
 
 const SERIES = [
@@ -90,9 +88,8 @@ function buildDatasets(palette) {
     data: [],
     borderColor: palette[s.key],
     pointBackgroundColor: palette[s.key],
-    backgroundColor:
-      s.key === 'temp' ? hexToRgba(palette.temp, 0.16) : 'transparent',
-    fill: s.key === 'temp' ? 'origin' : false,
+    backgroundColor: 'transparent',
+    fill: false,
     pointRadius: 0,
     pointHoverRadius: 4,
     pointHoverBorderWidth: 2,
@@ -139,8 +136,19 @@ function buildScales(palette) {
     y: {
       ...common,
       position: 'left',
-      suggestedMin: 15,
-      suggestedMax: 40,
+      // Sumbu suhu mengikuti data supaya variasi harian terlihat, bukan dipaku
+      // 15–40. Tapi kalau rentang datanya sangat sempit (0,5 °C), skala sekecil
+      // itu membuat noise tampak seperti gelombang besar — jadi diberi lebar
+      // minimum. grace menambah ruang 10% di atas dan di bawah.
+      grace: '10%',
+      afterDataLimits: (scale) => {
+        const MIN_SPAN = 4;
+        if (scale.max - scale.min < MIN_SPAN) {
+          const mid = (scale.min + scale.max) / 2;
+          scale.min = mid - MIN_SPAN / 2;
+          scale.max = mid + MIN_SPAN / 2;
+        }
+      },
       ticks: { ...common.ticks, color: palette.temp },
     },
     y1: {

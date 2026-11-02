@@ -4,15 +4,13 @@ import { RouterLink, RouterView, useRoute } from 'vue-router';
 import CommandToast from './components/CommandToast.vue';
 import Icon from './components/Icon.vue';
 import LoginModal from './components/LoginModal.vue';
+import StatusPills from './components/StatusPills.vue';
 import ZoneMenu from './components/ZoneMenu.vue';
 import {
-  ageText,
   dispose,
   init,
-  isStale,
   logout,
   refresh,
-  soilHealth,
   state,
   toggleTheme,
   zoneName,
@@ -21,16 +19,6 @@ import {
 
 const route = useRoute();
 const userMenuOpen = ref(false);
-
-const status = computed(() => {
-  if (!state.online) {
-    return { label: 'Offline', cls: 'pill-danger', dot: 'bg-danger' };
-  }
-  if (isStale.value) {
-    return { label: `Data ${ageText.value}`, cls: 'pill-warn', dot: 'bg-warn' };
-  }
-  return { label: 'Live', cls: 'pill-on', dot: 'bg-primary' };
-});
 
 const pageTitle = computed(() => route.meta.title || 'Dashboard');
 
@@ -143,14 +131,6 @@ onUnmounted(() => {
             </span>
             <Icon name="chevronDown" :size="13" class="shrink-0 text-white/45" />
           </button>
-
-          <div class="mt-3 flex items-center justify-between border-t border-white/10 pt-2.5">
-            <span class="inline-flex items-center gap-1.5 text-[10.5px] font-semibold text-white/65">
-              <span class="h-1.5 w-1.5 rounded-full" :class="status.dot" />
-              {{ status.label }}
-            </span>
-            <span class="text-[10px] text-white/40">{{ soilHealth?.text || '—' }}</span>
-          </div>
         </div>
       </div>
 
@@ -220,10 +200,9 @@ onUnmounted(() => {
           </div>
 
           <div class="ml-auto flex shrink-0 items-center gap-2">
-            <span class="pill hidden sm:inline-flex" :class="status.cls">
-              <span class="h-1.5 w-1.5 rounded-full" :class="status.dot" />
-              {{ status.label }}
-            </span>
+            <div class="hidden xl:block">
+              <StatusPills />
+            </div>
 
             <button
               class="btn-icon"
