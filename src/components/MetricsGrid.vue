@@ -22,7 +22,7 @@ const cards = computed(() =>
 </script>
 
 <template>
-  <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-5">
+  <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-4">
     <MetricCard
       v-for="card in cards"
       :key="card.metric.key"
