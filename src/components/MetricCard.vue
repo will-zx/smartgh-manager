@@ -43,7 +43,7 @@ const hintClass = computed(() => {
 </script>
 
 <template>
-  <article class="card card-pad relative overflow-hidden">
+  <article class="card card-pad relative flex min-h-[164px] flex-col overflow-hidden">
     <div class="flex items-center gap-2">
       <span
         class="grid h-8 w-8 shrink-0 place-items-center rounded-lg"
@@ -56,28 +56,29 @@ const hintClass = computed(() => {
       </span>
     </div>
 
-    <div class="mt-3 flex items-end justify-between gap-2">
-      <div class="min-w-0">
-        <div class="num flex items-baseline gap-1">
-          <span class="text-[24px] font-bold leading-none tracking-tight text-ink sm:text-[27px]">
-            {{ display }}
-          </span>
-          <span v-if="metric.unit" class="text-[11px] font-semibold text-muted">
-            {{ metric.unit }}
-          </span>
-        </div>
-        <p class="mt-1.5 text-[10.5px] font-semibold leading-snug" :class="hintClass">
-          {{ metric.hint }}
-        </p>
+    <div class="mt-3 min-w-0">
+      <div class="num flex items-baseline gap-1">
+        <span class="text-[24px] font-bold leading-none tracking-tight text-ink sm:text-[27px]">
+          {{ display }}
+        </span>
+        <span v-if="metric.unit" class="text-[11px] font-semibold text-muted">
+          {{ metric.unit }}
+        </span>
       </div>
+      <p class="mt-1.5 text-[10.5px] font-semibold leading-snug" :class="hintClass">
+        {{ metric.hint }}
+      </p>
+    </div>
+    <div class="mt-auto pt-3">
       <Sparkline
         v-if="spark.length > 1"
         :values="spark"
-        :width="84"
+        :width="160"
         :height="30"
-        class="mb-0.5 hidden w-20 shrink-0 sm:block"
+        class="block h-[30px] w-full"
         :class="tone.line"
       />
+      <div v-else class="h-[30px]" aria-hidden="true" />
     </div>
   </article>
 </template>
