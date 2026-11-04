@@ -25,6 +25,7 @@ import {
   humanAge,
   mmss,
 } from './format.js';
+import { isCommandConfirmed } from './command-confirmation.js';
 
 const THEME_KEY = 'smartgh.theme';
 const ACT_NAMES = { mist: 'Misting', irigasi: 'Irigasi', blower: 'Blower' };
@@ -504,46 +505,22 @@ function cmdLabel(cmd) {
   return ACT_NAMES[cmd.action] || cmd.action;
 }
 
-function cmdConfirmed(cmd, row) {
-  if (!row) return false;
-  switch (cmd.action) {
-    case 'auto':
-      return ['mist', 'irigasi', 'blower'].every((k) => row.override[k] === 'auto');
-    case 'mist':
-    case 'irigasi':
-    case 'blower': {
-      const mode = cmd.mode || (cmd.value ? 'on' : 'off');
-      const current = row.override[cmd.action];
-      if (current === 'on' || current === 'off' || current === 'auto') {
-        return current === mode;
-      }
-      return cmd.value ? row[cmd.action] === true : row.manual === false;
-    }
-    case 'set_vpd':
-      return row.phase.target !== null && Math.abs(row.phase.target - cmd.value) < 0.01;
-    case 'set_fase':
-      return cmd.value ? row.phase.name === cmd.value : row.phase.active === false;
-    case 'set_durasi':
-      return row.phase.duration !== null && row.phase.duration === cmd.seconds;
-    case 'fase_reset':
-      return row.phase.elapsed !== null && row.phase.elapsed <= 5;
-    default:
-      return false;
-  }
-}
-
 function checkPending() {
   const slots = Object.entries(state.pending);
   if (!slots.length) return;
   const row = latestAny ?? state.lastData;
   for (const [key, pending] of slots) {
-    if (cmdConfirmed(pending, row)) {
-      state.cmdStatus = `Perintah ${cmdLabel(pending)} dieksekusi perangkat.`;
+    if (isCommandConfirmed(pending, row)) {
+      state.cmdStatus = `Status ${cmdLabel(pending)} terkonfirmasi dari telemetri terbaru.`;
       state.cmdError = '';
       state.cmdAt = Date.now();
       delete state.pending[key];
     } else if (Date.now() > pending.deadline) {
-      state.cmdError = `Perintah ${cmdLabel(pending)} belum dieksekusi — perangkat tidak merespons dalam ${Math.round(CMD_TIMEOUT_MS / 1000)} detik.`;
+      const id = pending.commandId ? ` (ID ${pending.commandId})` : '';
+      state.cmdError =
+        `Status ${cmdLabel(pending)}${id} belum terkonfirmasi dari telemetri terbaru ` +
+        `dalam ${Math.round(CMD_TIMEOUT_MS / 1000)} detik. Perintah mungkin sudah diterapkan; ` +
+        'periksa log serial dan data RTDB sebelum mengirim ulang.';
       state.cmdStatus = '';
       state.cmdAt = Date.now();
       delete state.pending[key];
@@ -584,12 +561,16 @@ export async function sendCommand(action, value, extra = {}) {
     state.cmdAt = Date.now();
   }
   try {
-    await writeCommand(zoneId(), body);
+    const baseline = latestAny ?? state.lastData;
+    const response = await writeCommand(zoneId(), body);
     state.pending[key] = {
       action,
       value,
       mode: extra.mode ?? null,
       seconds: extra.seconds ?? null,
+      commandId: response?.name ?? null,
+      baselineLogKey: baseline?._key ?? null,
+      baselineLogTs: baseline?.ts ?? null,
       sentAt: Date.now(),
       deadline: Date.now() + CMD_TIMEOUT_MS,
     };
