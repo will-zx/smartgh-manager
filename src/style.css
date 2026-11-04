@@ -53,6 +53,12 @@ html {
   color-scheme: light;
 }
 
+@media (min-width: 80rem) {
+  .metric-grid-centered {
+    grid-column-start: var(--metric-grid-start);
+  }
+}
+
 html.dark {
   color-scheme: dark;
   --color-bg: #06130f;

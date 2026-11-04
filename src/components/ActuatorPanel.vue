@@ -82,9 +82,20 @@ function actualStatus(item) {
           {{ state.isAdmin ? 'Kendali aktuator' : 'Status aktuator' }}
         </h2>
       </div>
-      <span class="pill pill-off">
-        {{ state.isAdmin ? 'Admin · kontrol aktif' : 'Tamu · hanya lihat' }}
-      </span>
+      <div class="flex items-center gap-2">
+        <span class="pill pill-off">
+          {{ state.isAdmin ? 'Admin · kontrol aktif' : 'Tamu · hanya lihat' }}
+        </span>
+        <button
+          v-if="state.isAdmin"
+          class="btn shrink-0 px-2 py-1.5 text-[10px]"
+          type="button"
+          @click="releaseAll()"
+        >
+          <Icon name="refresh" :size="12" class="text-primary" />
+          Kembali ke Auto
+        </button>
+      </div>
     </div>
 
     <div
@@ -161,11 +172,5 @@ function actualStatus(item) {
       {{ irrigationLine }}
     </div>
 
-    <div v-if="state.isAdmin" class="mt-3 flex justify-end border-t border-line pt-3">
-      <button class="btn shrink-0" type="button" @click="releaseAll()">
-        <Icon name="refresh" :size="14" class="text-primary" />
-        Kembali ke Auto
-      </button>
-    </div>
   </section>
 </template>
