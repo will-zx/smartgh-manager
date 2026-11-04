@@ -27,8 +27,8 @@ import { state } from '../lib/store.js';
     </div>
 
     <div class="grid items-start gap-4 xl:grid-cols-12">
-      <MetricsGrid class="xl:col-span-8" />
-      <ActuatorPanel class="xl:col-span-4" />
+      <MetricsGrid class="xl:col-span-7" />
+      <ActuatorPanel class="xl:col-span-5" />
     </div>
 
     <div class="grid items-start gap-4 xl:grid-cols-12">
