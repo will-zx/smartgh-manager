@@ -8,3 +8,4 @@ dist/
 
 # Konteks proyek bersama: symlink ke ../AGENTS.md di folder Capstone
 AGENTS.md
+IDEA.md

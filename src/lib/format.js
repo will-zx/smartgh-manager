@@ -75,6 +75,7 @@ export function fmtPercent(v) {
 }
 
 export const csvCell = (v) => {
-  const s = v === null || v === undefined ? '' : String(v);
-  return /[",;\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
+  let s = v === null || v === undefined ? '' : String(v);
+  if (/^[\u0000-\u0020]*[=+\-@]/.test(s)) s = `'${s}`;
+  return /[",;\r\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
 };

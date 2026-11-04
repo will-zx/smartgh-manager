@@ -119,13 +119,13 @@ karena tidak ada rule-nya.
       "$zone": {
         "sensor_logs": {
           ".read":  true,
-          ".write": "auth.uid === 'p1Q4MrmL2ROBqoZh6UujwJHSIfW2'"
+          ".write": "$zone === 'esp32-gh-01' && auth.uid === 'p1Q4MrmL2ROBqoZh6UujwJHSIfW2'"
         }
       }
     },
     "commands": {
       "$zone": {
-        ".read":  "auth.uid === 'p1Q4MrmL2ROBqoZh6UujwJHSIfW2'",
+        ".read":  "$zone === 'esp32-gh-01' && auth.uid === 'p1Q4MrmL2ROBqoZh6UujwJHSIfW2'",
         ".write": "auth.uid === 'QpW484FycYRnq5S5rzNpON297F83'"
       }
     },
@@ -147,8 +147,10 @@ Empat hal yang perlu diingat:
   tidak punya tombol "matikan pendaftaran", jadi siapa pun yang memegang apiKey (memang publik di
   dashboard) bisa `signUp` dengan email `siapa-saja@device.local` dan langsung lolos regex.
   Dengan `auth.uid`, akun hasil signup (UID acak) **nol akses tulis**.
-- **`$zone` wildcard** — tidak perlu mendaftarkan tiap greenhouse, tapi tiap unit harus UID-nya
-  didaftarkan di rules (lihat §2b "Akun"). Tambah unit = tambah 1 UID device.
+- **Izin device dibatasi per zona** — wildcard `$zone` tetap dipakai untuk struktur, tetapi syarat
+  `$zone` dan UID harus cocok bersama. Saat menambah greenhouse, tambahkan pasangan zona–UID pada
+  ekspresi rules untuk `sensor_logs.write` dan `commands.read`; jangan memberi satu UID akses ke
+  semua zona.
 - **UID, bukan email** — kalau email device/admin diganti, rules tidak perlu diubah (UID tetap).
 - **Tidak ada rule di root** → semua yang tidak disebut di atas otomatis tertutup. Jangan pernah
   menaruh `.read`/`.write` di root atau di `zones`, karena yang lebih dangkal menang dan akan
@@ -245,7 +247,7 @@ curl -s -X DELETE "$DB/zones/$Z/sensor_logs/t.json?auth=$DEV" >/dev/null
 
 #### Rollback
 
-Simpan `{"rules":{".read":true,"write":true}}` di file lokal sebelum publish. Kalau terkunci di
+Simpan `{"rules":{".read":true,".write":true}}` di file lokal sebelum publish. Kalau terkunci di
 luar, paste ulang rules itu → **Publish**. Butuh ~30 detik, tidak ada data yang hilang.
 
 #### Catatan produksi
@@ -257,9 +259,10 @@ luar, paste ulang rules itu → **Publish**. Butuh ~30 detik, tidak ada data yan
   bisa `signUp` (mis. `siapa-saja@device.local`) hanya berbekal apiKey. Karena itu rules memakai
   **allowlist UID**: akun hasil signup ber-UID acak → nol akses. (Menutup pendaftaran sepenuhnya
   butuh upgrade ke Identity Platform + blocking function — tidak perlu untuk capstone.)
-- **Daftar UID ada di rules** — tambah unit greenhouse = tambah UID device ke rules. Kalau butuh
-  pembatasan per-zona (unit A tidak boleh tulis zona B), ganti dengan mapping uid → daftar zona.
-  Sekarang `sensor_logs.write` mengizinkan UID device menulis **semua** `$zone`.
+- **Daftar UID dan zona ada di rules** — rules contoh membatasi device `esp32-gh-01` ke zona yang
+  sama. Untuk unit baru, tambahkan kondisi pasangan zona–UID pada `sensor_logs.write` dan
+  `commands.read`, lalu publish rules tersebut di Firebase Console. Perubahan dokumentasi ini
+  tidak mengubah rules yang sedang aktif di Firebase.
 - **Legacy database secret**: firmware tidak memakainya lagi (murni ID token `?auth=<idToken>`).
   Kalau di **Project settings → Service accounts → Database secrets** masih ada entri, revoke.
 - **Password device** ikut ter-compile ke `firmware.bin`, jadi jangan dipakai ulang di layanan lain.
