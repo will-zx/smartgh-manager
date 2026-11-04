@@ -4,6 +4,7 @@ import Icon from './Icon.vue';
 import {
   actuatorModes,
   actuators,
+  isStale,
   onSwitch,
   overrideChip,
   releaseAll,
@@ -50,10 +51,26 @@ const items = computed(() => [
 ]);
 
 const MODES = [
+  { value: 'off', label: 'OFF', active: 'seg-btn-off' },
   { value: 'on', label: 'ON', active: 'seg-btn-on' },
   { value: 'auto', label: 'AUTO', active: 'seg-btn-auto' },
-  { value: 'off', label: 'OFF', active: 'seg-btn-off' },
 ];
+
+const notice = computed(() => {
+  if (!state.lastData) return { tone: 'warn', text: 'Status aktuator belum tersedia dari perangkat.' };
+  if (isStale.value) return { tone: 'warn', text: 'Telemetri lebih dari 5 menit; status mungkin tidak aktual.' };
+  if (a.value.flags?.irrigOff) return { tone: 'warn', text: 'Irigasi otomatis dimatikan di perangkat. Perintah manual tetap tersedia.' };
+  if (irrigation.value?.holdReason) return { tone: 'warn', text: `Siklus irigasi ditahan: ${irrigation.value.holdReason}` };
+  return { tone: 'ok', text: 'Tidak ada peringatan aktuator.' };
+});
+
+function actualStatus(item) {
+  if (!state.lastData) return 'Belum ada data';
+  const stateText = item.on ? 'Aktif' : 'Mati';
+  const mode = modes.value[item.key];
+  if (mode === 'unknown') return stateText;
+  return `${stateText} · ${mode === 'auto' ? 'Auto' : 'Manual'}`;
+}
 </script>
 
 <template>
@@ -71,79 +88,46 @@ const MODES = [
     </div>
 
     <div
-      v-if="a.flags?.irrigOff"
-      class="mt-3 flex items-start gap-2 rounded-xl border border-warn-line bg-warn-soft px-3 py-2 text-[11.5px] leading-snug text-warn"
+      class="mt-3 flex items-start gap-2 rounded-xl border px-3 py-2 text-[11px] leading-snug"
+      :class="notice.tone === 'ok' ? 'border-primary-line bg-primary-soft text-primary-dark' : 'border-warn-line bg-warn-soft text-warn'"
     >
-      <Icon name="alert" :size="15" class="mt-0.5 shrink-0" />
-      <span>
-        <b>Irigasi otomatis dimatikan di perangkat</b> — debit pompa belum dikalibrasi.
-        Perintah manual tetap bisa dijalankan.
-      </span>
+      <Icon :name="notice.tone === 'ok' ? 'check' : 'alert'" :size="14" class="mt-0.5 shrink-0" />
+      <span>{{ notice.text }}</span>
     </div>
 
-    <div
-      v-if="irrigation?.holdReason"
-      class="mt-3 flex items-start gap-2 rounded-xl border border-warn-line bg-warn-soft px-3 py-2 text-[11.5px] leading-snug text-warn"
-    >
-      <Icon name="clock" :size="15" class="mt-0.5 shrink-0" />
-      <span><b>Siklus irigasi ditahan</b> — {{ irrigation.holdReason }}</span>
+    <div class="mt-4 hidden grid-cols-[minmax(0,1fr)_minmax(0,1.7fr)_minmax(0,1fr)] gap-3 px-3 text-[9px] font-bold tracking-[0.08em] text-faint md:grid">
+      <span>AKTUATOR</span>
+      <span class="text-center">MODE KENDALI</span>
+      <span class="text-right">STATUS AKTUAL</span>
     </div>
 
-    <div
-      v-if="irrigationLine"
-      class="mt-3 flex items-center gap-2 rounded-xl border border-line bg-surface-2 px-3 py-2 text-[11px] text-muted"
-    >
-      <Icon name="droplet" :size="14" class="shrink-0 text-hum" />
-      {{ irrigationLine }}
-    </div>
-
-    <div class="mt-4 grid gap-3 md:grid-cols-3">
+    <div class="mt-2 divide-y divide-line rounded-xl border border-line bg-surface-2 px-3">
       <article
         v-for="it in items"
         :key="it.key"
-        class="relative flex flex-col rounded-2xl border border-line bg-surface-2 p-3.5"
+        class="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-x-3 gap-y-2 py-3 md:grid-cols-[minmax(0,1fr)_minmax(0,1.7fr)_minmax(0,1fr)] md:gap-3"
       >
-        <span
-          v-if="overrideChip(it.key)"
-          class="absolute -top-2 right-3 inline-flex items-center gap-1 rounded-full border border-warn-line bg-warn-soft px-2 py-[1px] text-[9.5px] font-bold tracking-wide text-warn"
-        >
-          <Icon name="clock" :size="10" />
-          OVERRIDE {{ overrideChip(it.key) }}
-        </span>
-
-        <div class="flex items-center gap-2.5">
+        <div class="flex min-w-0 items-center gap-2">
           <span
-            class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-surface text-primary ring-1 ring-line"
+            class="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-surface text-primary ring-1 ring-line"
           >
-            <Icon :name="it.icon" :size="17" />
+            <Icon :name="it.icon" :size="15" />
           </span>
           <div class="min-w-0">
-            <h3 class="text-[13px] font-bold text-ink">{{ it.label }}</h3>
-            <p class="text-[10.5px] text-muted">
-              <template v-if="it.fuzzy !== null">Fuzzy {{ it.fuzzy ? 'ON' : 'OFF' }}</template>
-              <template v-else>Status fuzzy belum tersedia</template>
-              <template v-if="it.duty != null"> · Duty {{ Math.round(it.duty * 100) }}%</template>
+            <h3 class="truncate text-[12px] font-bold text-ink">{{ it.label }}</h3>
+            <p class="truncate text-[10px] text-muted">
+              {{ it.duty != null ? `Duty ${Math.round(it.duty * 100)}%` : it.fuzzy === null ? 'Fuzzy belum tersedia' : `Fuzzy ${it.fuzzy ? 'ON' : 'OFF'}` }}
             </p>
           </div>
-          <span
-            class="ml-auto inline-flex items-center gap-1.5 text-[13px] font-bold"
-            :class="it.on ? 'text-ok' : 'text-danger'"
-          >
-            <span
-              class="h-2 w-2 rounded-full"
-              :class="it.on ? 'bg-ok shadow-[0_0_0_3px_rgb(15_122_90/0.14)]' : 'bg-danger'"
-            />
-            {{ it.on ? 'ON' : 'OFF' }}
-          </span>
         </div>
 
-        <div v-if="state.isAdmin" class="mt-auto pt-3">
-          <div class="seg" role="group" :aria-label="`Mode ${it.label}`">
+        <div class="col-span-2 md:col-span-1">
+          <div v-if="state.isAdmin" class="seg w-full" role="group" :aria-label="`Mode ${it.label}`">
             <button
               v-for="m in MODES"
               :key="m.value"
               type="button"
-              class="seg-btn"
+              class="seg-btn min-w-0 px-1.5 text-[10px]"
               :class="modes[it.key] === m.value ? m.active : ''"
               :aria-pressed="modes[it.key] === m.value"
               :title="`${it.label}: ${m.value === 'auto' ? 'ikut fuzzy' : m.value === 'on' ? 'paksa nyala' : 'paksa mati'}`"
@@ -152,17 +136,32 @@ const MODES = [
               {{ m.label }}
             </button>
           </div>
-          <p
-            v-if="state.pending[it.key]"
-            class="mt-1.5 text-center text-[10px] font-semibold text-warn"
+          <p v-else class="text-center text-[10px] text-faint">—</p>
+        </div>
+
+        <div class="col-start-2 row-start-1 flex min-w-0 flex-col items-end md:col-start-3">
+          <span class="inline-flex items-center gap-1.5 text-right text-[10.5px] font-bold leading-tight"
+            :class="!state.lastData ? 'text-faint' : it.on ? 'text-ok' : 'text-muted'"
           >
-            Menunggu konfirmasi perangkat…
-          </p>
+            <span
+              class="h-2 w-2 shrink-0 rounded-full"
+              :class="!state.lastData ? 'bg-faint' : it.on ? 'bg-ok shadow-[0_0_0_3px_rgb(15_122_90/0.14)]' : 'bg-line-strong'"
+            />
+            {{ actualStatus(it) }}
+          </span>
+          <span v-if="overrideChip(it.key)" class="mt-1 text-[9px] font-semibold text-warn">
+            Override {{ overrideChip(it.key) }}
+          </span>
         </div>
       </article>
     </div>
 
-    <div v-if="state.isAdmin" class="mt-4 flex border-t border-line pt-3 sm:justify-end">
+    <div v-if="irrigationLine" class="mt-3 flex items-center gap-2 text-[10.5px] text-muted">
+      <Icon name="droplet" :size="13" class="shrink-0 text-hum" />
+      {{ irrigationLine }}
+    </div>
+
+    <div v-if="state.isAdmin" class="mt-3 flex justify-end border-t border-line pt-3">
       <button class="btn shrink-0" type="button" @click="releaseAll()">
         <Icon name="refresh" :size="14" class="text-primary" />
         Kembali ke Auto
