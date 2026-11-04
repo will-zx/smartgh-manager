@@ -26,14 +26,15 @@ import { state } from '../lib/store.js';
       </div>
     </div>
 
-    <MetricsGrid />
+    <div class="grid items-start gap-4 xl:grid-cols-12">
+      <MetricsGrid class="xl:col-span-8" />
+      <ActuatorPanel class="xl:col-span-4" />
+    </div>
 
     <div class="grid items-start gap-4 xl:grid-cols-12">
       <TrendChart class="xl:col-span-8" />
       <PhasePanel class="xl:col-span-4" />
     </div>
-
-    <ActuatorPanel />
 
     <p class="px-1 text-[10.5px] leading-relaxed text-faint">
       Data sensor dibaca dari Firebase Realtime Database. Interval polling mengikuti rentang grafik
