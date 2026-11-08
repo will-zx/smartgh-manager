@@ -596,7 +596,7 @@ export async function sendCommand(action, value, extra = {}) {
 }
 
 export function onSwitch(action, mode) {
-  sendCommand(action, mode !== 'auto', { mode });
+  sendCommand(action, mode === 'on', { mode });
 }
 
 export function releaseAll() {
