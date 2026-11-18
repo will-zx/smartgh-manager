@@ -53,14 +53,14 @@ html {
 
 html.dark {
   color-scheme: dark;
-  --color-bg: #111a14;
-  --color-surface: #1a261e;
-  --color-surface-2: #202e24;
-  --color-line: #344338;
-  --color-line-strong: #536356;
-  --color-ink: #edf2e9;
-  --color-muted: #b0bdad;
-  --color-faint: #a0af9e;
+  --color-bg: #000000;
+  --color-surface: #0a0a0a;
+  --color-surface-2: #141414;
+  --color-line: #292929;
+  --color-line-strong: #454545;
+  --color-ink: #f2f2f2;
+  --color-muted: #b3b3b3;
+  --color-faint: #929292;
 
   --color-primary: #8cacff;
   --color-primary-dark: #bfd0ff;
@@ -83,9 +83,9 @@ html.dark {
   --color-etc: #e0bd54;
   --color-dose: #5ad7df;
 
-  --color-sidebar: #111b15;
-  --color-sidebar-2: #1a2a1e;
-  --color-sidebar-line: #304237;
+  --color-sidebar: #050505;
+  --color-sidebar-2: #101010;
+  --color-sidebar-line: #292929;
 
   --shadow-card: 0 1px 2px rgb(0 0 0 / 0.2), 0 12px 30px -22px rgb(0 0 0 / 0.8);
   --shadow-float: 0 18px 50px -20px rgb(0 0 0 / 0.8);
@@ -290,8 +290,8 @@ html.dark {
   inset-inline-start: 0.75rem;
   transform: translateY(-160%);
   border-radius: 0.75rem;
-  background: var(--color-ink);
-  color: var(--color-surface);
+  background: #17232d;
+  color: #fff;
   padding: 0.7rem 1rem;
   font-size: 0.875rem;
   font-weight: 700;

@@ -20,7 +20,7 @@ import { ageText, isStale, state, zoneName } from '../lib/store.js';
           {{ zoneName() }} · kondisi terkini dan respons perangkat · diperbarui {{ ageText }} lalu
         </p>
       </div>
-      <div class="inline-flex items-center gap-2 rounded-lg bg-ink px-4 py-3 text-[11px] font-bold tracking-wide text-surface">
+      <div class="inline-flex items-center gap-2 rounded-lg bg-[#17232d] px-4 py-3 text-[11px] font-bold tracking-wide text-white">
         <span class="h-2 w-2 rounded-full" :class="state.online && !isStale ? 'bg-[#b7dc83]' : 'bg-warn'" />
         {{ state.online ? (isStale ? 'DATA PERLU DIPERIKSA' : 'SISTEM ONLINE') : 'MENUNGGU PERANGKAT' }}
       </div>
