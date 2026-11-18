@@ -1,0 +1,141 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1120" viewBox="0 0 1600 1120" role="img" aria-labelledby="title desc">
+  <title id="title">Wireframe dashboard Smart Greenhouse — desktop</title>
+  <desc id="desc">Konsep dashboard desktop dengan navigasi horizontal, metrik sensor, grafik iklim, dan kontrol perangkat.</desc>
+  <defs>
+    <style>
+      text { font-family: Inter, ui-sans-serif, system-ui, sans-serif; fill: #17232d; }
+      .muted { fill: #64717b; } .blue { fill: #2457d6; } .orange { fill: #c65d2e; }
+      .light { fill: #fffefa; }
+      .small { font-size: 13px; } .label { font-size: 12px; font-weight: 700; letter-spacing: 1.2px; }
+      .value { font-size: 30px; font-weight: 700; letter-spacing: -1px; }
+      .title { font-size: 34px; font-weight: 650; letter-spacing: -1.2px; }
+      .card { fill: #fffefa; stroke: #d9dedc; stroke-width: 1.5; }
+      .rule { stroke: #e1e5e2; stroke-width: 1; }
+    </style>
+  </defs>
+  <rect width="1600" height="1120" fill="#f4f3ee"/>
+
+  <rect width="1600" height="82" fill="#fffefa"/>
+  <path d="M0 81.5H1600" class="rule"/>
+  <text x="66" y="49" font-size="19" font-weight="800" letter-spacing="1.1">FIELDNOTE <tspan class="blue">/</tspan> GREENHOUSE</text>
+  <text x="520" y="49" font-size="14" font-weight="650" class="blue">Ringkasan</text>
+  <text x="640" y="49" font-size="14" font-weight="550" class="muted">Grafik</text>
+  <text x="725" y="49" font-size="14" font-weight="550" class="muted">Perangkat</text>
+  <text x="838" y="49" font-size="14" font-weight="550" class="muted">Riwayat</text>
+  <rect x="1270" y="19" width="185" height="44" rx="8" fill="#f4f3ee" stroke="#d9dedc"/>
+  <text x="1290" y="46" font-size="14" font-weight="650">Cabai Jawa</text>
+  <path d="m1424 37 6 6 6-6" fill="none" stroke="#64717b" stroke-width="1.7"/>
+  <circle cx="1490" cy="41" r="5" fill="#648646"/>
+  <text x="1503" y="46" font-size="13" font-weight="650" fill="#405a2f">Terhubung</text>
+
+  <text x="74" y="145" class="label blue">RUANG OPERASI / 01</text>
+  <text x="74" y="192" class="title">Kontrol iklim rumah kaca</text>
+  <text x="74" y="222" font-size="15" class="muted">Kondisi terkini dan respons perangkat · diperbarui 18 detik lalu</text>
+  <rect x="1335" y="153" width="190" height="45" rx="8" fill="#17232d"/>
+  <circle cx="1360" cy="175" r="5" fill="#b7dc83"/>
+  <text x="1376" y="180" class="light" font-size="13" font-weight="650">SISTEM ONLINE</text>
+
+  <!-- Sensor readings -->
+  <g>
+    <rect x="74" y="255" width="278" height="145" rx="10" class="card"/>
+    <text x="96" y="286" class="label muted">SUHU UDARA</text>
+    <text x="96" y="340" class="value">25.1<tspan font-size="16" class="muted"> °C</tspan></text>
+    <path d="M96 370h34" stroke="#c65d2e" stroke-width="3"/>
+    <text x="142" y="375" class="small muted">stabil</text>
+
+    <rect x="370" y="255" width="278" height="145" rx="10" class="card"/>
+    <text x="392" y="286" class="label muted">KELEMBAPAN</text>
+    <text x="392" y="340" class="value">68<tspan font-size="16" class="muted"> %</tspan></text>
+    <path d="M392 370h34" stroke="#2457d6" stroke-width="3"/>
+    <text x="438" y="375" class="small muted">udara</text>
+
+    <rect x="666" y="255" width="278" height="145" rx="10" class="card"/>
+    <text x="688" y="286" class="label muted">AIR TANAH</text>
+    <text x="688" y="340" class="value">47<tspan font-size="16" class="muted"> %</tspan></text>
+    <rect x="688" y="358" width="100" height="25" rx="5" fill="#e8efd9"/>
+    <text x="701" y="375" font-size="12" font-weight="700" fill="#405a2f">3/3 PROBE</text>
+
+    <rect x="962" y="255" width="278" height="145" rx="10" class="card"/>
+    <text x="984" y="286" class="label muted">VPD</text>
+    <text x="984" y="340" class="value">1.24<tspan font-size="16" class="muted"> kPa</tspan></text>
+    <text x="984" y="375" class="small muted">target <tspan font-weight="700" fill="#2457d6">1.00 kPa</tspan></text>
+
+    <rect x="1258" y="255" width="267" height="145" rx="10" class="card"/>
+    <text x="1280" y="286" class="label muted">ETc HARIAN</text>
+    <text x="1280" y="340" class="value">5.4<tspan font-size="16" class="muted"> mm</tspan></text>
+    <text x="1280" y="375" class="small muted">kebutuhan air tanaman</text>
+  </g>
+
+  <!-- Trend -->
+  <rect x="74" y="430" width="914" height="440" rx="10" class="card"/>
+  <text x="102" y="471" font-size="18" font-weight="700">Iklim mikro</text>
+  <text x="102" y="495" class="small muted">Suhu, kelembapan, dan VPD sepanjang waktu</text>
+  <rect x="795" y="450" width="163" height="38" rx="7" fill="#f4f3ee"/>
+  <text x="817" y="474" font-size="12" font-weight="700" class="blue">6 JAM</text>
+  <text x="886" y="474" font-size="12" font-weight="600" class="muted">24 JAM</text>
+  <g class="small">
+    <circle cx="113" cy="531" r="4" fill="#c65d2e"/><text x="126" y="536" class="muted">Suhu</text>
+    <circle cx="195" cy="531" r="4" fill="#2457d6"/><text x="208" y="536" class="muted">RH</text>
+    <circle cx="256" cy="531" r="4" fill="#758c42"/><text x="269" y="536" class="muted">VPD</text>
+    <path d="M337 531h25" stroke="#758c42" stroke-dasharray="4 4" stroke-width="2"/><text x="370" y="536" class="muted">Target</text>
+  </g>
+  <g>
+    <path d="M120 585H950M120 655H950M120 725H950M120 795H950" class="rule"/>
+    <path d="M120 565V810M286 565V810M452 565V810M618 565V810M784 565V810M950 565V810" class="rule"/>
+    <text x="87" y="590" class="small muted">40°</text><text x="87" y="660" class="small muted">30°</text>
+    <text x="87" y="730" class="small muted">20°</text><text x="87" y="800" class="small muted">10°</text>
+    <polyline points="120,684 175,678 230,691 285,669 340,666 395,675 450,655 505,662 560,670 615,650 670,646 725,659 780,648 835,637 890,642 950,624" fill="none" stroke="#c65d2e" stroke-width="3"/>
+    <polyline points="120,625 175,632 230,618 285,621 340,629 395,615 450,619 505,605 560,614 615,618 670,603 725,612 780,608 835,595 890,601 950,590" fill="none" stroke="#2457d6" stroke-width="3"/>
+    <polyline points="120,751 175,748 230,757 285,744 340,741 395,745 450,737 505,739 560,746 615,737 670,733 725,739 780,730 835,726 890,731 950,721" fill="none" stroke="#758c42" stroke-width="3"/>
+    <path d="M120 745H950" fill="none" stroke="#758c42" stroke-width="1.5" stroke-dasharray="5 6" opacity=".7"/>
+    <text x="120" y="839" class="small muted">08:00</text><text x="330" y="839" class="small muted">10:00</text>
+    <text x="537" y="839" class="small muted">12:00</text><text x="744" y="839" class="small muted">14:00</text>
+    <text x="916" y="839" class="small muted">SEKARANG</text>
+  </g>
+
+  <!-- Controls -->
+  <rect x="1010" y="430" width="515" height="440" rx="10" class="card"/>
+  <text x="1038" y="471" font-size="18" font-weight="700">Kendali perangkat</text>
+  <text x="1038" y="495" class="small muted">Status aktual · hak akses admin</text>
+  <rect x="1351" y="449" width="145" height="32" rx="6" fill="#f4f3ee"/>
+  <text x="1367" y="470" font-size="11" font-weight="700" class="muted">KEMBALI KE AUTO</text>
+  <path d="M1038 519H1497" class="rule"/>
+  <text x="1038" y="546" class="label muted">PERANGKAT</text>
+  <text x="1284" y="546" class="label muted">MODE</text>
+  <text x="1450" y="546" class="label muted">STATUS</text>
+  <g>
+    <path d="M1038 565H1497M1038 641H1497M1038 717H1497M1038 793H1497" class="rule"/>
+    <circle cx="1052" cy="603" r="6" fill="#c65d2e"/>
+    <text x="1070" y="599" font-size="14" font-weight="700">Misting</text><text x="1070" y="620" class="small muted">Pompa kabut</text>
+    <rect x="1273" y="584" width="154" height="38" rx="6" fill="#f4f3ee"/>
+    <text x="1287" y="608" class="small muted">AUTO</text><rect x="1330" y="588" width="44" height="30" rx="5" fill="#2457d6"/><text x="1340" y="608" class="light" font-size="12" font-weight="700">ON</text><text x="1381" y="608" class="small muted">OFF</text>
+    <text x="1450" y="607" font-size="12" font-weight="700" fill="#405a2f">AKTIF</text>
+
+    <circle cx="1052" cy="679" r="6" fill="#2457d6"/>
+    <text x="1070" y="675" font-size="14" font-weight="700">Blower</text><text x="1070" y="696" class="small muted">Duty 54%</text>
+    <rect x="1273" y="660" width="154" height="38" rx="6" fill="#f4f3ee"/>
+    <text x="1287" y="684" class="small muted">AUTO</text><text x="1340" y="684" class="small muted">ON</text><rect x="1375" y="664" width="44" height="30" rx="5" fill="#17232d"/><text x="1385" y="684" class="light" font-size="12" font-weight="700">OFF</text>
+    <text x="1450" y="683" font-size="12" font-weight="700" class="muted">MATI</text>
+
+    <circle cx="1052" cy="755" r="6" fill="#758c42"/>
+    <text x="1070" y="751" font-size="14" font-weight="700">Irigasi</text><text x="1070" y="772" class="small muted">Pompa distribusi</text>
+    <rect x="1273" y="736" width="154" height="38" rx="6" fill="#e8efd9"/>
+    <text x="1287" y="760" font-size="12" font-weight="700" fill="#405a2f">AUTO</text><text x="1340" y="760" class="small muted">ON</text><text x="1385" y="760" class="small muted">OFF</text>
+    <text x="1450" y="759" font-size="12" font-weight="700" class="muted">MATI</text>
+  </g>
+  <rect x="1038" y="815" width="459" height="34" rx="6" fill="#f4f3ee"/>
+  <text x="1053" y="837" font-size="12" font-weight="600">Fase <tspan font-weight="750">Vegetatif</tspan></text>
+  <text x="1235" y="837" font-size="12" class="muted">Target VPD</text>
+  <text x="1330" y="837" font-size="12" font-weight="700" class="blue">1.00 kPa</text>
+  <text x="1453" y="837" font-size="12" class="blue" font-weight="650">Atur →</text>
+
+  <!-- Recent activity -->
+  <rect x="74" y="900" width="1451" height="145" rx="10" class="card"/>
+  <text x="102" y="941" font-size="18" font-weight="700">Aktivitas terbaru</text>
+  <text x="102" y="966" class="small muted">Ringkasan peristiwa perangkat</text>
+  <path d="M385 926V1018M745 926V1018M1105 926V1018" class="rule"/>
+  <circle cx="420" cy="963" r="5" fill="#648646"/><text x="436" y="961" font-size="13" font-weight="700">Data sensor diterima</text><text x="436" y="984" class="small muted">18 detik lalu · semua probe aktif</text>
+  <circle cx="780" cy="963" r="5" fill="#2457d6"/><text x="796" y="961" font-size="13" font-weight="700">Target fase diperbarui</text><text x="796" y="984" class="small muted">Vegetatif · VPD 1.00 kPa</text>
+  <circle cx="1140" cy="963" r="5" fill="#c65d2e"/><text x="1156" y="961" font-size="13" font-weight="700">Misting aktif</text><text x="1156" y="984" class="small muted">Otomatis · mengikuti fuzzy</text>
+  <text x="102" y="1020" font-size="12" class="blue" font-weight="650">Buka riwayat lengkap →</text>
+</svg>

@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000" role="img" aria-labelledby="title desc">
+  <title id="title">Wireframe riwayat sensor Smart Greenhouse — desktop</title>
+  <desc id="desc">Konsep halaman riwayat dengan pencarian, filter, tabel sensor, status probe dan ekspor CSV.</desc>
+  <defs>
+    <style>
+      text { font-family: Inter, ui-sans-serif, system-ui, sans-serif; fill: #17232d; }
+      .muted { fill: #64717b; } .blue { fill: #2457d6; } .small { font-size: 12px; }
+      .light { fill: #fffefa; }
+      .label { font-size: 11px; font-weight: 700; letter-spacing: 1px; }
+      .rule { stroke: #e1e5e2; stroke-width: 1; } .cell { font-size: 13px; }
+    </style>
+  </defs>
+  <rect width="1600" height="1000" fill="#f4f3ee"/>
+  <rect width="1600" height="82" fill="#fffefa"/>
+  <path d="M0 81.5H1600" class="rule"/>
+  <text x="66" y="49" font-size="19" font-weight="800" letter-spacing="1.1">FIELDNOTE <tspan class="blue">/</tspan> GREENHOUSE</text>
+  <text x="520" y="49" font-size="14" font-weight="550" class="muted">Ringkasan</text>
+  <text x="640" y="49" font-size="14" font-weight="550" class="muted">Grafik</text>
+  <text x="725" y="49" font-size="14" font-weight="550" class="muted">Perangkat</text>
+  <text x="838" y="49" font-size="14" font-weight="700" class="blue">Riwayat</text>
+  <path d="M838 66h54" stroke="#2457d6" stroke-width="2.5"/>
+  <rect x="1270" y="19" width="185" height="44" rx="8" fill="#f4f3ee" stroke="#d9dedc"/>
+  <text x="1290" y="46" font-size="14" font-weight="650">Cabai Jawa</text>
+  <path d="m1424 37 6 6 6-6" fill="none" stroke="#64717b" stroke-width="1.7"/>
+  <circle cx="1490" cy="41" r="5" fill="#648646"/>
+  <text x="1503" y="46" font-size="13" font-weight="650" fill="#405a2f">Terhubung</text>
+
+  <text x="74" y="145" class="label blue">DATA PERANGKAT</text>
+  <text x="74" y="192" font-size="34" font-weight="700" letter-spacing="-1.2">Riwayat pembacaan</text>
+  <text x="74" y="221" font-size="15" class="muted">Cabai Jawa <tspan fill="#aab1b2">/</tspan> 4.320 record terakhir</text>
+  <rect x="1357" y="153" width="168" height="46" rx="7" fill="#2457d6"/>
+  <path d="M1381 168v16m-6-6 6 6 6-6m-11 10h22" fill="none" stroke="#fffefa" stroke-width="1.7"/>
+  <text x="1400" y="181" class="light" font-size="13" font-weight="700">Ekspor CSV</text>
+
+  <!-- Filters -->
+  <rect x="74" y="255" width="1451" height="90" rx="9" fill="#fffefa" stroke="#d9dedc" stroke-width="1.5"/>
+  <rect x="96" y="278" width="420" height="44" rx="6" fill="#fffefa" stroke="#c9d0d0"/>
+  <circle cx="116" cy="298" r="6" fill="none" stroke="#64717b" stroke-width="1.5"/>
+  <path d="m120 302 5 5" stroke="#64717b" stroke-width="1.5"/>
+  <text x="140" y="303" font-size="13" class="muted">Cari waktu atau status…</text>
+  <rect x="1036" y="278" width="150" height="44" rx="6" fill="#f4f3ee" stroke="#d9dedc"/>
+  <text x="1054" y="303" font-size="13" font-weight="600">24 jam</text><path d="m1158 296 5 5 5-5" fill="none" stroke="#64717b" stroke-width="1.5"/>
+  <rect x="1200" y="278" width="150" height="44" rx="6" fill="#f4f3ee" stroke="#d9dedc"/>
+  <text x="1218" y="303" font-size="13" font-weight="600">25 baris</text><path d="m1320 296 5 5 5-5" fill="none" stroke="#64717b" stroke-width="1.5"/>
+  <text x="1400" y="303" font-size="12" class="muted">Rentang data</text>
+
+  <!-- Table -->
+  <rect x="74" y="370" width="1451" height="480" rx="9" fill="#fffefa" stroke="#d9dedc" stroke-width="1.5"/>
+  <path d="M74 428H1525" stroke="#c9d0d0" stroke-width="1.5"/>
+  <rect x="75" y="371" width="1449" height="57" rx="8" fill="#eeefeb"/>
+  <text x="98" y="405" class="label muted">WAKTU</text>
+  <text x="336" y="405" class="label muted">SUHU</text>
+  <text x="495" y="405" class="label muted">RH</text>
+  <text x="635" y="405" class="label muted">TANAH</text>
+  <text x="790" y="405" class="label muted">VPD</text>
+  <text x="932" y="405" class="label muted">ETc</text>
+  <text x="1081" y="405" class="label muted">FASE</text>
+  <text x="1271" y="405" class="label muted">STATUS PERANGKAT</text>
+  <g>
+    <path d="M75 486H1524M75 544H1524M75 602H1524M75 660H1524M75 718H1524M75 776H1524" class="rule"/>
+    <text x="98" y="463" class="cell" font-weight="650">18 Nov, 14:32:18</text>
+    <text x="336" y="463" class="cell">25.1 °C</text><text x="495" y="463" class="cell">68 %</text>
+    <text x="635" y="463" class="cell">47 %</text><rect x="690" y="444" width="77" height="24" rx="5" fill="#e8efd9"/><text x="699" y="460" font-size="10" font-weight="700" fill="#405a2f">3/3 PROBE</text>
+    <text x="790" y="463" class="cell">1.24 kPa</text><text x="932" y="463" class="cell">5.4 mm</text>
+    <text x="1081" y="463" class="cell">Vegetatif</text><circle cx="1275" cy="458" r="4" fill="#648646"/><text x="1288" y="463" class="cell" font-weight="650">Misting ON</text>
+
+    <text x="98" y="521" class="cell" font-weight="650">18 Nov, 14:32:00</text>
+    <text x="336" y="521" class="cell">25.0 °C</text><text x="495" y="521" class="cell">68 %</text>
+    <text x="635" y="521" class="cell">47 %</text><text x="790" y="521" class="cell">1.22 kPa</text>
+    <text x="932" y="521" class="cell">5.4 mm</text><text x="1081" y="521" class="cell">Vegetatif</text>
+    <circle cx="1275" cy="516" r="4" fill="#b7a13a"/><text x="1288" y="521" class="cell" font-weight="650">Auto · semua mati</text>
+
+    <text x="98" y="579" class="cell" font-weight="650">18 Nov, 14:31:42</text>
+    <text x="336" y="579" class="cell">25.0 °C</text><text x="495" y="579" class="cell">69 %</text>
+    <text x="635" y="579" class="cell">46 %</text><rect x="690" y="560" width="77" height="24" rx="5" fill="#fff0df"/><text x="699" y="576" font-size="10" font-weight="700" fill="#9b4c25">2/3 PROBE</text>
+    <text x="790" y="579" class="cell">1.21 kPa</text><text x="932" y="579" class="cell">5.3 mm</text>
+    <text x="1081" y="579" class="cell">Vegetatif</text><circle cx="1275" cy="574" r="4" fill="#c65d2e"/><text x="1288" y="579" class="cell" font-weight="650" fill="#9b4c25">Probe 2 tidak terdeteksi</text>
+
+    <text x="98" y="637" class="cell" font-weight="650">18 Nov, 14:31:24</text>
+    <text x="336" y="637" class="cell">24.9 °C</text><text x="495" y="637" class="cell">69 %</text>
+    <text x="635" y="637" class="cell">46 %</text><text x="790" y="637" class="cell">1.20 kPa</text>
+    <text x="932" y="637" class="cell">5.3 mm</text><text x="1081" y="637" class="cell">Vegetatif</text>
+    <circle cx="1275" cy="632" r="4" fill="#648646"/><text x="1288" y="637" class="cell" font-weight="650">Irigasi ON · manual</text>
+
+    <text x="98" y="695" class="cell" font-weight="650">18 Nov, 14:31:06</text>
+    <text x="336" y="695" class="cell">24.9 °C</text><text x="495" y="695" class="cell">70 %</text>
+    <text x="635" y="695" class="cell">46 %</text><text x="790" y="695" class="cell">1.19 kPa</text>
+    <text x="932" y="695" class="cell">5.3 mm</text><text x="1081" y="695" class="cell">Vegetatif</text>
+    <circle cx="1275" cy="690" r="4" fill="#648646"/><text x="1288" y="695" class="cell" font-weight="650">Semua sistem normal</text>
+
+    <text x="98" y="753" class="cell" font-weight="650">18 Nov, 14:30:48</text>
+    <text x="336" y="753" class="cell">24.8 °C</text><text x="495" y="753" class="cell">70 %</text>
+    <text x="635" y="753" class="cell">46 %</text><text x="790" y="753" class="cell">1.18 kPa</text>
+    <text x="932" y="753" class="cell">5.3 mm</text><text x="1081" y="753" class="cell">Vegetatif</text>
+    <circle cx="1275" cy="748" r="4" fill="#b7a13a"/><text x="1288" y="753" class="cell" font-weight="650">Data terlambat · 6 menit</text>
+
+    <text x="98" y="811" class="cell" font-weight="650">18 Nov, 14:30:30</text>
+    <text x="336" y="811" class="cell">24.8 °C</text><text x="495" y="811" class="cell">70 %</text>
+    <text x="635" y="811" class="cell">45 %</text><text x="790" y="811" class="cell">1.17 kPa</text>
+    <text x="932" y="811" class="cell">5.2 mm</text><text x="1081" y="811" class="cell">Vegetatif</text>
+    <circle cx="1275" cy="806" r="4" fill="#648646"/><text x="1288" y="811" class="cell" font-weight="650">Misting ON</text>
+  </g>
+  <path d="M75 850H1524" class="rule"/>
+  <text x="98" y="890" font-size="13" class="muted">Menampilkan <tspan font-weight="700" fill="#17232d">1–25</tspan> dari <tspan font-weight="700" fill="#17232d">4.320</tspan> record</text>
+  <g>
+    <rect x="1290" y="866" width="34" height="34" rx="6" fill="#f4f3ee"/><path d="m1310 877-6 6 6 6" fill="none" stroke="#64717b" stroke-width="1.6"/>
+    <rect x="1330" y="866" width="34" height="34" rx="6" fill="#2457d6"/><text x="1342" y="888" class="light" font-size="12" font-weight="700">1</text>
+    <rect x="1370" y="866" width="34" height="34" rx="6" fill="#f4f3ee"/><text x="1382" y="888" font-size="12" font-weight="650">2</text>
+    <rect x="1410" y="866" width="34" height="34" rx="6" fill="#f4f3ee"/><text x="1422" y="888" font-size="12" font-weight="650">3</text>
+    <rect x="1450" y="866" width="34" height="34" rx="6" fill="#f4f3ee"/><path d="m1464 877 6 6-6 6" fill="none" stroke="#64717b" stroke-width="1.6"/>
+  </g>
+  <text x="74" y="955" font-size="12" class="muted">Log sensor tidak dihapus oleh dashboard · ekspor CSV mengikuti filter saat ini</text>
+</svg>

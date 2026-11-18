@@ -1,84 +1,38 @@
 <script setup>
 import { computed } from 'vue';
-import Icon from './Icon.vue';
-import Sparkline from './Sparkline.vue';
 import { fmtMl, fmtNum } from '../lib/format.js';
 
 const props = defineProps({
   metric: { type: Object, required: true },
-  spark: { type: Array, default: () => [] },
 });
-
-const TONES = {
-  temp: { text: 'text-temp', soft: 'bg-temp/10', line: 'text-temp' },
-  hum: { text: 'text-hum', soft: 'bg-hum/10', line: 'text-hum' },
-  soil: { text: 'text-soil', soft: 'bg-soil/10', line: 'text-soil' },
-  vpd: { text: 'text-vpd', soft: 'bg-vpd/10', line: 'text-vpd' },
-  etc: { text: 'text-etc', soft: 'bg-etc/10', line: 'text-etc' },
-  dose: { text: 'text-dose', soft: 'bg-dose/10', line: 'text-dose' },
-};
-
-const tone = computed(() => TONES[props.metric.tone] || TONES.hum);
-
-const display = computed(() => {
-  if (props.metric.ml) return fmtMl(props.metric.value) ?? '-';
-  return fmtNum(props.metric.value, props.metric.digits ?? 2);
-});
-
-const ICONS = {
-  temp: 'thermometer',
-  hum: 'humidity',
-  soil: 'soil',
-  vpd: 'gauge',
-  etc: 'etc',
-  budget: 'flask',
-  used: 'water',
-};
 
 const hintClass = computed(() => {
-  if (props.metric.hintTone === 'danger') return 'text-danger';
-  if (props.metric.hintTone === 'warn') return 'text-warn';
+  if (props.metric.hintTone === 'danger') return 'text-danger bg-danger-soft';
+  if (props.metric.hintTone === 'warn') return 'text-warn bg-warn-soft';
+  if (props.metric.key === 'soil') return 'metric-probe';
   return 'text-muted';
 });
+
+const display = computed(() => props.metric.ml
+  ? fmtMl(props.metric.value) ?? '-'
+  : fmtNum(props.metric.value, props.metric.digits ?? 2));
 </script>
 
 <template>
-  <article class="card card-pad relative flex min-h-[164px] flex-col overflow-hidden">
-    <div class="flex items-center gap-2">
-      <span
-        class="grid h-8 w-8 shrink-0 place-items-center rounded-lg"
-        :class="[tone.soft, tone.text]"
-      >
-        <Icon :name="ICONS[metric.key] || 'activity'" :size="16" />
-      </span>
-      <span class="text-[11px] font-semibold tracking-wide text-muted">
-        {{ metric.label }}
-      </span>
-    </div>
-
-    <div class="mt-3 min-w-0">
+  <article class="metric-card">
+    <p class="text-[11px] font-bold uppercase tracking-[0.09em] text-muted">{{ metric.label }}</p>
+    <div class="mt-5 min-w-0">
       <div class="num flex items-baseline gap-1">
-        <span class="text-[24px] font-bold leading-none tracking-tight text-ink sm:text-[27px]">
+        <span class="text-[27px] font-bold leading-none tracking-tight text-ink sm:text-[30px]">
           {{ display }}
         </span>
         <span v-if="metric.unit" class="text-[11px] font-semibold text-muted">
           {{ metric.unit }}
         </span>
       </div>
-      <p class="mt-1.5 text-[10.5px] font-semibold leading-snug" :class="hintClass">
+      <p v-if="metric.hint" class="mt-3 w-fit rounded px-2 py-1 text-[10.5px] font-bold leading-snug" :class="hintClass">
         {{ metric.hint }}
       </p>
-    </div>
-    <div class="mt-auto pt-3">
-      <Sparkline
-        v-if="spark.length > 1"
-        :values="spark"
-        :width="160"
-        :height="30"
-        class="block h-[30px] w-full"
-        :class="tone.line"
-      />
-      <div v-else class="h-[30px]" aria-hidden="true" />
     </div>
   </article>
 </template>

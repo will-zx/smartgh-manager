@@ -12,6 +12,7 @@ import {
   setLogFilter,
   setLogPage,
   setLogRows,
+  setTrendRange,
   state,
   zoneName,
 } from '../lib/store.js';
@@ -46,20 +47,18 @@ function statusTone(row) {
 
 <template>
   <div class="space-y-4">
-    <div class="flex flex-wrap items-center justify-between gap-3">
+    <div class="flex flex-wrap items-end justify-between gap-3">
       <div>
-        <p class="text-[10.5px] font-bold uppercase tracking-[0.16em] text-primary">
-          Histori pembacaan
-        </p>
-        <h1 class="mt-0.5 text-[20px] font-bold text-ink">Log sensor · {{ zoneName() }}</h1>
+      <p class="eyebrow">Data perangkat</p>
+      <h1 class="mt-2 text-[clamp(1.7rem,2.5vw,2.2rem)] font-bold tracking-[-0.04em] text-ink">Riwayat pembacaan</h1>
         <p class="text-[11.5px] text-muted">
-          Jendela {{ rangeLabel }} · {{ matchedLogs.length }} baris · data terakhir {{ ageText }} lalu
+          {{ zoneName() }} · Jendela {{ rangeLabel }} · {{ matchedLogs.length }} baris · data terakhir {{ ageText }} lalu
         </p>
       </div>
       <div class="flex items-center gap-2">
         <button class="btn" type="button" @click="exportCsv()">
           <Icon name="download" :size="14" class="text-primary" />
-          Export CSV
+          Ekspor CSV
         </button>
       </div>
     </div>
@@ -82,8 +81,19 @@ function statusTone(row) {
           />
         </div>
 
+        <div class="flex flex-wrap items-center gap-2">
         <label class="flex items-center gap-2 text-[11.5px] font-semibold text-muted">
-          Tampilkan
+          Rentang
+          <select
+            :value="state.trendRange"
+            class="input w-auto py-1.5"
+            @change="setTrendRange($event.target.value)"
+          >
+            <option v-for="(range, key) in TREND_RANGE" :key="key" :value="key">{{ range.label }}</option>
+          </select>
+        </label>
+        <label class="flex items-center gap-2 text-[11.5px] font-semibold text-muted">
+          Baris
           <select
             :value="state.logRows"
             class="input w-auto py-1.5"
@@ -96,25 +106,28 @@ function statusTone(row) {
           </select>
           baris
         </label>
+        </div>
       </div>
 
-      <div class="mt-3 overflow-x-auto rounded-xl border border-line">
-        <table class="w-full min-w-[880px] border-collapse text-[12px]">
+      <div class="mt-3 overflow-x-auto rounded-xl border border-line" tabindex="0" role="region" aria-label="Tabel riwayat pembacaan sensor">
+        <table class="w-full min-w-[960px] border-collapse text-[12px]">
+          <caption class="sr-only">Riwayat pembacaan sensor greenhouse</caption>
           <thead>
             <tr>
-              <th class="table-head sticky left-0 z-10 bg-surface-2">Waktu</th>
-              <th class="table-head">Suhu (°C)</th>
-              <th class="table-head">RH (%)</th>
-              <th class="table-head">Tanah (%)</th>
-              <th class="table-head">VPD (kPa)</th>
-              <th class="table-head">ETc (mm/hari)</th>
-              <th class="table-head">Fase</th>
-              <th class="table-head">Status</th>
+              <th scope="col" class="table-head sticky left-0 top-0 z-20 bg-surface-2">Waktu</th>
+              <th scope="col" class="table-head sticky top-0 z-10">Suhu (°C)</th>
+              <th scope="col" class="table-head sticky top-0 z-10">RH (%)</th>
+              <th scope="col" class="table-head sticky top-0 z-10">Tanah (%)</th>
+              <th scope="col" class="table-head sticky top-0 z-10">Probe</th>
+              <th scope="col" class="table-head sticky top-0 z-10">VPD (kPa)</th>
+              <th scope="col" class="table-head sticky top-0 z-10">ETc (mm/hari)</th>
+              <th scope="col" class="table-head sticky top-0 z-10">Fase</th>
+              <th scope="col" class="table-head sticky top-0 z-10">Status</th>
             </tr>
           </thead>
           <tbody>
             <tr v-if="state.loadError">
-              <td colspan="8" class="px-4 py-10 text-center">
+              <td colspan="9" class="px-4 py-10 text-center">
                 <Icon name="alert" :size="22" class="mx-auto text-danger" />
                 <p class="mt-2 text-[12px] font-semibold text-danger">
                   Gagal memuat log ({{ state.loadError }}). Gunakan tombol muat ulang di header.
@@ -122,7 +135,7 @@ function statusTone(row) {
               </td>
             </tr>
             <tr v-else-if="!matchedLogs.length">
-              <td colspan="8" class="px-4 py-10 text-center">
+              <td colspan="9" class="px-4 py-10 text-center">
                 <Icon name="list" :size="22" class="mx-auto text-faint" />
                 <p class="mt-2 text-[12px] font-semibold text-muted">
                   {{ state.logFilter ? 'Tidak ada baris yang cocok.' : 'Belum ada data sensor.' }}
@@ -144,6 +157,11 @@ function statusTone(row) {
               <td class="table-cell num font-semibold text-ink">{{ fmtNum(row.temperature, 1) }}</td>
               <td class="table-cell num font-semibold text-ink">{{ fmtNum(row.humidity, 1) }}</td>
               <td class="table-cell num font-semibold text-ink">{{ fmtNum(row.soil, 0) }}</td>
+              <td class="table-cell">
+                <span class="pill" :class="row.soilN === 3 ? 'probe-good' : row.soilN > 0 ? 'pill-warn' : 'pill-danger'">
+                  {{ row.soilN }}/3
+                </span>
+              </td>
               <td class="table-cell num font-semibold text-ink">{{ fmtNum(row.vpd) }}</td>
               <td class="table-cell num font-semibold text-ink">{{ fmtNum(row.etc) }}</td>
               <td class="table-cell">
