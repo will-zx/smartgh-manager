@@ -74,7 +74,7 @@ function actualStatus(item) {
 </script>
 
 <template>
-  <section class="card card-pad">
+  <section class="card card-pad min-w-0">
     <div class="flex flex-wrap items-start justify-between gap-3">
       <div>
         <h2 class="flex items-center gap-2 text-[14px] font-bold text-ink">

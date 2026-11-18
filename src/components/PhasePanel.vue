@@ -58,34 +58,16 @@ function applySetpoints() {
 
 <template>
   <section class="card card-pad flex flex-col">
-    <div class="flex items-start justify-between gap-3">
-      <div>
-        <h2 class="flex items-center gap-2 text-[14px] font-bold text-ink">
-          <Icon name="target" :size="17" class="text-primary" />
-          Fase &amp; setpoint
-        </h2>
-        <p class="mt-0.5 text-[11px] text-muted">
-          Setpoint mengoreksi keluaran fuzzy, bukan menggantikannya.
-        </p>
-      </div>
-      <span
-        class="pill shrink-0"
-        :class="phase?.active ? 'pill-on' : 'pill-off'"
-      >
-        <span
-          class="h-1.5 w-1.5 rounded-full"
-          :class="phase?.active ? 'bg-primary' : 'bg-faint'"
-        />
-        {{ phase?.active ? 'Aktif' : 'Fuzzy penuh' }}
-      </span>
-    </div>
-
-    <div class="mt-4 rounded-2xl border border-line bg-gradient-to-br from-primary-soft/70 to-surface-2 p-4">
+    <div class="rounded-2xl border border-line bg-gradient-to-br from-primary-soft/70 to-surface-2 p-4">
       <div class="flex items-end justify-between gap-3">
         <div class="min-w-0">
-          <p class="text-[10.5px] font-bold uppercase tracking-[0.1em] text-muted">
-            Fase berjalan
-          </p>
+          <div class="flex flex-wrap items-center gap-2">
+            <p class="text-[10.5px] font-bold uppercase tracking-[0.1em] text-muted">Fase berjalan</p>
+            <span class="pill shrink-0" :class="phase?.active ? 'pill-on' : 'pill-off'">
+              <span class="h-1.5 w-1.5 rounded-full" :class="phase?.active ? 'bg-primary' : 'bg-faint'" />
+              {{ phase?.active ? 'Aktif' : 'Fuzzy penuh' }}
+            </span>
+          </div>
           <p class="mt-0.5 truncate text-[19px] font-bold capitalize text-ink">
             {{ phase?.name || 'Tanpa fase' }}
           </p>

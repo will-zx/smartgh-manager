@@ -2,10 +2,9 @@
 import ActuatorPanel from '../components/ActuatorPanel.vue';
 import Icon from '../components/Icon.vue';
 import MetricsGrid from '../components/MetricsGrid.vue';
-import PhasePanel from '../components/PhasePanel.vue';
 import StatusPills from '../components/StatusPills.vue';
 import TrendChart from '../components/TrendChart.vue';
-import { ageText, isStale, state, zoneName } from '../lib/store.js';
+import { state, zoneName } from '../lib/store.js';
 </script>
 
 <template>
@@ -14,15 +13,11 @@ import { ageText, isStale, state, zoneName } from '../lib/store.js';
       <div>
         <p class="eyebrow">Ruang operasi / 01</p>
         <h1 class="mt-2 text-[clamp(1.8rem,3.5vw,2.6rem)] font-bold leading-tight tracking-[-0.045em] text-ink">
-          Kontrol iklim rumah kaca
+          Kondisi rumah kaca
         </h1>
         <p class="mt-2 text-sm text-muted">
-          {{ zoneName() }} · kondisi terkini dan respons perangkat · diperbarui {{ ageText }} lalu
+          {{ zoneName() }} · iklim, kebutuhan air, dan status perangkat
         </p>
-      </div>
-      <div class="inline-flex items-center gap-2 rounded-lg bg-[#17232d] px-4 py-3 text-[11px] font-bold tracking-wide text-white">
-        <span class="h-2 w-2 rounded-full" :class="state.online && !isStale ? 'bg-[#b7dc83]' : 'bg-warn'" />
-        {{ state.online ? (isStale ? 'DATA PERLU DIPERIKSA' : 'SISTEM ONLINE') : 'MENUNGGU PERANGKAT' }}
       </div>
     </section>
 
@@ -43,12 +38,10 @@ import { ageText, isStale, state, zoneName } from '../lib/store.js';
 
     <MetricsGrid />
 
-    <div class="grid items-start gap-4 xl:grid-cols-12">
+    <div class="grid min-w-0 items-start gap-4 xl:grid-cols-12">
       <TrendChart class="xl:col-span-7" />
       <ActuatorPanel class="xl:col-span-5" />
     </div>
-
-    <PhasePanel />
 
     <p class="px-1 text-[10.5px] leading-relaxed text-faint">
       Data sensor dibaca dari Firebase Realtime Database. Interval polling mengikuti rentang grafik

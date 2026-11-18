@@ -9,3 +9,5 @@ dist/
 # Konteks proyek bersama: symlink ke ../AGENTS.md di folder Capstone
 AGENTS.md
 IDEA.md
+# Playwright CLI output (may contain credentials)
+.playwright-cli/

@@ -259,7 +259,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <section class="card card-pad flex flex-col">
+  <section class="card card-pad flex min-w-0 flex-col">
     <div class="flex flex-wrap items-start justify-between gap-3">
       <div>
         <h2 class="flex items-center gap-2 text-[14px] font-bold text-ink">

@@ -27,6 +27,7 @@ const initial = computed(() => {
 
 const navItems = [
   { to: '/', name: 'dashboard', label: 'Dashboard' },
+  { to: '/setpoint', name: 'setpoint', label: 'Setpoint' },
   { to: '/log', name: 'log', label: 'Log Sensor' },
 ];
 
@@ -76,11 +77,11 @@ onUnmounted(() => {
   <div class="min-h-screen">
     <a class="skip-link" href="#main-content">Lewati ke konten</a>
     <header class="sticky top-0 z-30 border-b border-line bg-surface/95 backdrop-blur-md">
-      <div class="mx-auto flex min-h-[72px] max-w-[1520px] flex-wrap items-center gap-2 px-4 py-2 sm:flex-nowrap sm:gap-5 sm:px-6 sm:py-0 lg:px-8">
+      <div class="mx-auto flex min-h-[72px] max-w-[1520px] flex-wrap items-center gap-2 px-4 py-2 xl:flex-nowrap xl:gap-5 sm:px-6 sm:py-0 lg:px-8">
         <RouterLink to="/" class="shrink-0 text-[15px] font-extrabold tracking-[0.04em] text-ink" aria-label="Fieldnote Greenhouse, beranda">
           FIELDNOTE <span class="text-primary">/</span> <span class="hidden sm:inline">GREENHOUSE</span>
         </RouterLink>
-        <nav aria-label="Navigasi utama" class="order-last -mx-4 flex basis-[calc(100%+2rem)] items-center gap-1 overflow-x-auto border-t border-line px-4 pt-1 sm:order-none sm:mx-0 sm:min-w-0 sm:flex-1 sm:basis-auto sm:border-0 sm:px-0 sm:pt-0">
+        <nav aria-label="Navigasi utama" class="order-last -mx-4 flex basis-[calc(100%+2rem)] items-center gap-1 overflow-x-auto border-t border-line px-4 pt-1 xl:order-none xl:mx-0 xl:min-w-0 xl:flex-1 xl:basis-auto xl:border-0 xl:px-0 xl:pt-0">
         <RouterLink
           v-for="item in navItems"
           :key="item.to"
@@ -92,7 +93,7 @@ onUnmounted(() => {
           {{ item.label }}
         </RouterLink>
         </nav>
-        <div class="hidden shrink-0 items-center gap-2 sm:flex">
+        <div class="hidden shrink-0 items-center gap-2 xl:flex">
           <StatusPills />
         </div>
         <button

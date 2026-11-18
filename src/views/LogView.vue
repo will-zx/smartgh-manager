@@ -3,7 +3,6 @@ import { computed } from 'vue';
 import Icon from '../components/Icon.vue';
 import { TREND_RANGE } from '../config.js';
 import {
-  ageText,
   exportCsv,
   logPageCount,
   matchedLogs,
@@ -52,7 +51,7 @@ function statusTone(row) {
       <p class="eyebrow">Data perangkat</p>
       <h1 class="mt-2 text-[clamp(1.7rem,2.5vw,2.2rem)] font-bold tracking-[-0.04em] text-ink">Riwayat pembacaan</h1>
         <p class="text-[11.5px] text-muted">
-          {{ zoneName() }} · Jendela {{ rangeLabel }} · {{ matchedLogs.length }} baris · data terakhir {{ ageText }} lalu
+          {{ zoneName() }} · Jendela {{ rangeLabel }} · {{ matchedLogs.length }} baris
         </p>
       </div>
       <div class="flex items-center gap-2">

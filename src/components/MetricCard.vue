@@ -2,9 +2,7 @@
 import { computed } from 'vue';
 import { fmtMl, fmtNum } from '../lib/format.js';
 
-const props = defineProps({
-  metric: { type: Object, required: true },
-});
+const props = defineProps({ metric: { type: Object, required: true } });
 
 const hintClass = computed(() => {
   if (props.metric.hintTone === 'danger') return 'text-danger bg-danger-soft';
@@ -19,7 +17,9 @@ const display = computed(() => props.metric.ml
 </script>
 
 <template>
-  <article class="metric-card">
+  <article
+    class="metric-card"
+  >
     <p class="text-[11px] font-bold uppercase tracking-[0.09em] text-muted">{{ metric.label }}</p>
     <div class="mt-5 min-w-0">
       <div class="num flex items-baseline gap-1">

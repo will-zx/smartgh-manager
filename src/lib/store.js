@@ -248,7 +248,6 @@ export const metrics = computed(() => {
       value: d?.temperature,
       digits: 1,
       unit: '°C',
-      tone: 'temp',
       hint: 'SHT31',
     },
     {
@@ -257,7 +256,6 @@ export const metrics = computed(() => {
       value: d?.humidity,
       digits: 1,
       unit: '%',
-      tone: 'hum',
       hint: 'RH relatif',
     },
     {
@@ -266,7 +264,6 @@ export const metrics = computed(() => {
       value: d?.soil,
       digits: 0,
       unit: '%',
-      tone: 'soil',
       hint: soilHealth.value?.text || 'rata-rata probe',
       hintTone: soilHealth.value?.tone,
     },
@@ -276,7 +273,6 @@ export const metrics = computed(() => {
       value: d?.vpd,
       digits: 2,
       unit: 'kPa',
-      tone: 'vpd',
       hint: d?.phase?.target != null ? `target ${d.phase.target.toFixed(2)}` : 'defisit tekanan',
     },
     {
@@ -285,7 +281,6 @@ export const metrics = computed(() => {
       value: d?.etc,
       digits: 2,
       unit: 'mm/hari',
-      tone: 'etc',
       hint: 'Blaney-Criddle',
     },
     ...(ig?.budgetMl != null
@@ -295,7 +290,6 @@ export const metrics = computed(() => {
           value: ig.budgetMl,
           unit: '',
           ml: true,
-          tone: 'dose',
           hint:
             remainingBudget === null
               ? 'anggaran irigasi'
@@ -311,7 +305,6 @@ export const metrics = computed(() => {
           value: ig.usedMl,
           unit: '',
           ml: true,
-          tone: 'vpd',
           hint: 'hari ini',
         }]
       : []),
