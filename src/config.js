@@ -10,6 +10,7 @@ export const DB_URL =
 
 export const ZONES = runtime.ZONES || [
   { id: 'esp32-gh-01', name: 'Greenhouse 1' },
+  { id: 'esp32-gh-02', name: 'Greenhouse 2' },
 ];
 
 export const ADMIN_UID =
