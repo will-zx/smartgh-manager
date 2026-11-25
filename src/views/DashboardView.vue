@@ -11,9 +11,9 @@ import { state, zoneName } from '../lib/store.js';
   <div class="space-y-6">
     <section class="flex flex-wrap items-end justify-between gap-5">
       <div>
-        <p class="eyebrow">Ruang operasi / 01</p>
+        <p class="eyebrow">Zona {{ String(state.currentZone + 1).padStart(2, '0') }}</p>
         <h1 class="mt-2 text-[clamp(1.8rem,3.5vw,2.6rem)] font-bold leading-tight tracking-[-0.045em] text-ink">
-          Kondisi rumah kaca
+          Kondisi Greenhouse
         </h1>
         <p class="mt-2 text-sm text-muted">
           {{ zoneName() }} · iklim, kebutuhan air, dan status perangkat
