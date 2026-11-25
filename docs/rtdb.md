@@ -386,8 +386,8 @@ tapi tidak push, atau push-nya gagal terus dan data ada di antrean MicroSD.
    otomatis (risiko aktuator berulang).
 
 Viewer **tidak** melihat switch di UI, dan kalau mencoba lewat UI pun rules akan menolak
-(`401`). Perintah yang didukung ESP32: `mist`, `irigasi`, `blower`, `auto`, `restart`,
-`set_vpd`, `set_fase`, `set_durasi`, `fase_reset`.
+(`401`). Perintah yang didukung ESP32: `mist`, `irigasi`, `blower`, `set_blower_duty`,
+`auto`, `restart`, `set_vpd`, `set_fase`, `set_durasi`, `fase_reset`.
 
 ## 6. Menambah greenhouse baru
 

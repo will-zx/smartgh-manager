@@ -1,5 +1,5 @@
 <script setup>
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import Icon from './Icon.vue';
 import {
   actuatorModes,
@@ -8,11 +8,17 @@ import {
   onSwitch,
   overrideChip,
   releaseAll,
+  setBlowerDuty,
   state,
 } from '../lib/store.js';
 
 const a = computed(() => actuators.value);
 const modes = computed(() => actuatorModes.value);
+const blowerDuty = ref('');
+
+function submitBlowerDuty() {
+  setBlowerDuty(blowerDuty.value);
+}
 
 const irrigation = computed(() => state.lastData?.irrigation || null);
 
@@ -133,7 +139,28 @@ function actualStatus(item) {
         </div>
 
         <div class="col-span-2 md:col-span-1">
-          <div v-if="state.isAdmin" class="seg w-full" role="group" :aria-label="`Mode ${it.label}`">
+          <form
+            v-if="state.isAdmin && it.key === 'blower'"
+            class="flex items-center gap-2"
+            @submit.prevent="submitBlowerDuty"
+          >
+            <input
+              v-model="blowerDuty"
+              class="input min-w-0 flex-1 py-1.5 text-center text-[11px]"
+              type="number"
+              inputmode="numeric"
+              min="0"
+              max="100"
+              step="1"
+              placeholder="Duty 0-100"
+              title="0 = mati; di bawah 20% dijalankan pada duty minimum 20%"
+              aria-label="Duty blower dalam persen"
+            />
+            <button class="btn btn-primary shrink-0 px-2.5 py-1.5 text-[10px]" type="submit">
+              Set
+            </button>
+          </form>
+          <div v-else-if="state.isAdmin" class="seg w-full" role="group" :aria-label="`Mode ${it.label}`">
             <button
               v-for="m in MODES"
               :key="m.value"

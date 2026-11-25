@@ -491,6 +491,7 @@ async function pollLatestForConfirmation() {
 
 function cmdLabel(cmd) {
   if (cmd.action === 'auto') return 'Kembali ke Auto';
+  if (cmd.action === 'set_blower_duty') return `Duty blower ${Math.round(Number(cmd.value))}%`;
   if (cmd.action === 'set_vpd') return 'Target VPD';
   if (cmd.action === 'set_fase') return cmd.value ? 'Nama fase' : 'Nonaktifkan setpoint';
   if (cmd.action === 'set_durasi') return 'Durasi fase';
@@ -590,6 +591,21 @@ export async function sendCommand(action, value, extra = {}) {
 
 export function onSwitch(action, mode) {
   sendCommand(action, mode === 'on', { mode });
+}
+
+export function setBlowerDuty(value) {
+  if (value === '' || value === null || value === undefined) {
+    state.cmdError = 'Duty blower wajib diisi (0-100%).';
+    state.cmdAt = Date.now();
+    return;
+  }
+  const n = Number(value);
+  if (!Number.isFinite(n) || n < 0 || n > 100) {
+    state.cmdError = 'Duty blower harus angka 0-100%.';
+    state.cmdAt = Date.now();
+    return;
+  }
+  sendCommand('set_blower_duty', Math.round(n));
 }
 
 export function releaseAll() {

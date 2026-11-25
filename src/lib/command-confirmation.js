@@ -22,6 +22,13 @@ export function isCommandConfirmed(cmd, row) {
       }
       return cmd.value ? row[cmd.action] === true : row.manual === false;
     }
+    case 'set_blower_duty': {
+      const pct = Number(cmd.value);
+      if (!Number.isFinite(pct)) return false;
+      return row.override.blower === (pct === 0 ? 'off' : 'on')
+        && typeof row.blowerLevel === 'number'
+        && Math.abs(row.blowerLevel - pct / 100) < 0.02;
+    }
     case 'set_vpd':
       return row.phase.target !== null && Math.abs(row.phase.target - cmd.value) < 0.01;
     case 'set_fase':

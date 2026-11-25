@@ -58,3 +58,21 @@ test('confirms setpoint only from telemetry newer than the baseline', () => {
 
   assert.equal(isCommandConfirmed(command, baseRow), true);
 });
+
+test('confirms blower duty from the executed level', () => {
+  const command = {
+    action: 'set_blower_duty',
+    value: 55,
+    baselineLogKey: '-Oexample-old',
+    baselineLogTs: baseRow.ts - 20,
+  };
+  const row = {
+    ...baseRow,
+    override: { ...baseRow.override, blower: 'on' },
+    blower: true,
+    blowerLevel: 0.55,
+  };
+
+  assert.equal(isCommandConfirmed(command, row), true);
+  assert.equal(isCommandConfirmed(command, { ...row, blowerLevel: 0.4 }), false);
+});

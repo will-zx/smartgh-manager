@@ -78,7 +78,7 @@ onUnmounted(() => {
     <a class="skip-link" href="#main-content">Lewati ke konten</a>
     <header class="sticky top-0 z-30 border-b border-line bg-surface/95 backdrop-blur-md">
       <div class="mx-auto flex min-h-[72px] max-w-[1520px] flex-wrap items-center gap-1 px-3 py-2 sm:gap-2 sm:px-6 sm:py-0 xl:gap-5 lg:px-8">
-        <RouterLink to="/" class="shrink-0 text-[15px] font-extrabold tracking-[0.04em] text-ink" aria-label="Fieldnote Greenhouse, beranda">
+        <RouterLink to="/" class="shrink-0 whitespace-nowrap text-[14px] font-extrabold tracking-[0.04em] text-ink sm:text-[15px]" aria-label="Fieldnote Greenhouse, beranda">
           FIELDNOTE <span class="hidden text-primary sm:inline">/</span> <span class="hidden sm:inline">GREENHOUSE</span>
         </RouterLink>
         <nav aria-label="Navigasi utama" class="order-last -mx-3 flex basis-[calc(100%+1.5rem)] items-center gap-1 overflow-x-auto border-t border-line px-3 pt-1 sm:-mx-6 sm:basis-[calc(100%+3rem)] sm:px-6 xl:order-none xl:mx-0 xl:min-w-0 xl:flex-1 xl:basis-auto xl:border-0 xl:px-0 xl:pt-0">
@@ -96,37 +96,39 @@ onUnmounted(() => {
         <div class="hidden shrink-0 items-center gap-2 xl:flex">
           <StatusPills />
         </div>
-        <button
-          class="zone-select"
-          type="button"
-          aria-label="Pilih unit greenhouse"
-          @click="openZoneMenu"
-        >
-          <span class="max-w-32 truncate">{{ zoneName() }}</span>
-          <Icon name="chevronDown" :size="13" />
-        </button>
-        <button class="btn-icon" type="button" title="Muat ulang semua data" aria-label="Muat ulang semua data" :disabled="state.refreshSpin" :aria-busy="state.refreshSpin" @click="refresh()">
-          <span v-if="state.refreshSpin" class="spinner" aria-hidden="true" />
-          <Icon v-else name="refresh" :size="15" />
-        </button>
-        <button class="btn-icon" type="button" :title="state.theme === 'dark' ? 'Mode terang' : 'Mode gelap'" :aria-label="state.theme === 'dark' ? 'Aktifkan mode terang' : 'Aktifkan mode gelap'" @click="toggleTheme()">
-          <Icon :name="state.theme === 'dark' ? 'sun' : 'moon'" :size="16" />
-        </button>
-        <div class="relative shrink-0" @click.stop>
-          <button class="account-button" type="button" :aria-label="state.session ? 'Menu akun' : 'Login admin'" :aria-expanded="userMenuOpen" @click="openUser">
-            {{ initial }}
+        <div class="ml-auto flex min-w-0 items-center gap-1 sm:gap-2 xl:ml-0 xl:shrink-0">
+          <button
+            class="zone-select"
+            type="button"
+            aria-label="Pilih unit greenhouse"
+            @click="openZoneMenu"
+          >
+            <span class="min-w-0 truncate">{{ zoneName() }}</span>
+            <Icon name="chevronDown" :size="13" class="shrink-0" />
           </button>
-          <Transition enter-active-class="transition duration-150 ease-out" enter-from-class="scale-95 opacity-0" leave-active-class="transition duration-100 ease-in" leave-to-class="scale-95 opacity-0">
-            <div v-if="userMenuOpen && state.session" class="card absolute right-0 top-full z-50 mt-2 w-60 overflow-hidden p-1 shadow-float">
-              <div class="border-b border-line px-3 py-2.5">
-                <p class="truncate text-[11.5px] font-bold text-ink">{{ state.session.email }}</p>
-                <p class="text-[10px] text-muted">{{ state.isAdmin ? 'Admin' : 'Tamu' }}</p>
+          <button class="btn-icon" type="button" title="Muat ulang semua data" aria-label="Muat ulang semua data" :disabled="state.refreshSpin" :aria-busy="state.refreshSpin" @click="refresh()">
+            <span v-if="state.refreshSpin" class="spinner" aria-hidden="true" />
+            <Icon v-else name="refresh" :size="15" />
+          </button>
+          <button class="btn-icon" type="button" :title="state.theme === 'dark' ? 'Mode terang' : 'Mode gelap'" :aria-label="state.theme === 'dark' ? 'Aktifkan mode terang' : 'Aktifkan mode gelap'" @click="toggleTheme()">
+            <Icon :name="state.theme === 'dark' ? 'sun' : 'moon'" :size="16" />
+          </button>
+          <div class="relative shrink-0" @click.stop>
+            <button class="account-button" type="button" :aria-label="state.session ? 'Menu akun' : 'Login admin'" :aria-expanded="userMenuOpen" @click="openUser">
+              {{ initial }}
+            </button>
+            <Transition enter-active-class="transition duration-150 ease-out" enter-from-class="scale-95 opacity-0" leave-active-class="transition duration-100 ease-in" leave-to-class="scale-95 opacity-0">
+              <div v-if="userMenuOpen && state.session" class="card absolute right-0 top-full z-50 mt-2 w-60 overflow-hidden p-1 shadow-float">
+                <div class="border-b border-line px-3 py-2.5">
+                  <p class="truncate text-[11.5px] font-bold text-ink">{{ state.session.email }}</p>
+                  <p class="text-[10px] text-muted">{{ state.isAdmin ? 'Admin' : 'Tamu' }}</p>
+                </div>
+                <button class="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-[11.5px] font-semibold text-muted hover:bg-surface-2 hover:text-ink" type="button" @click="doLogout">
+                  <Icon name="logout" :size="14" /> Keluar
+                </button>
               </div>
-              <button class="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-[11.5px] font-semibold text-muted hover:bg-surface-2 hover:text-ink" type="button" @click="doLogout">
-                <Icon name="logout" :size="14" /> Keluar
-              </button>
-            </div>
-          </Transition>
+            </Transition>
+          </div>
         </div>
       </div>
     </header>

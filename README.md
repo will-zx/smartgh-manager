@@ -8,7 +8,7 @@ Firmware ESP32-nya ada di repo terpisah: [smartgh-firmware](https://github.com/w
 
 - Monitoring metrik sensor: suhu, kelembapan, kadar air tanah, VPD, ETc, dosis irigasi, dan air terpakai.
 - Grafik tren iklim mikro 6 jam / 24 jam.
-- Kendali aktuator: misting, irigasi, dan blower dengan mode `ON` / `AUTO` / `OFF`.
+- Kendali aktuator: misting dan irigasi dengan mode `ON` / `AUTO` / `OFF`; blower memakai input duty 0-100% + tombol Set.
 - Pengaturan fase dan setpoint VPD dalam satu form.
 - Multi-zone greenhouse dengan label yang bisa diubah admin.
 - Log sensor dengan pencarian, pagination, dan export CSV.
