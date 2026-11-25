@@ -156,6 +156,8 @@ export function normLog(src, key) {
     soilN,
     vpd: numOrNull(raw.vpd),
     etc,
+    tmean: numOrNull(raw.tmean_c),
+    tmeanFallback: raw.tmean_fallback === true,
     blowerLevel: level,
     misting: typeof raw.misting === 'boolean' ? raw.misting : statusRaw.includes('MISTING'),
     irigasi: typeof raw.irigasi === 'boolean' ? raw.irigasi : statusRaw.includes('IRIGASI'),
@@ -281,7 +283,7 @@ export const metrics = computed(() => {
       value: d?.etc,
       digits: 2,
       unit: 'mm/hari',
-      hint: 'Blaney-Criddle',
+      hint: d?.tmeanFallback ? 'Tmean sementara (belum 24 jam)' : 'Blaney-Criddle',
     },
     ...(ig?.budgetMl != null
       ? [{

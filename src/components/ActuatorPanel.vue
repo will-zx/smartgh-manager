@@ -67,6 +67,7 @@ const notice = computed(() => {
   if (isStale.value) return { tone: 'warn', text: 'Telemetri lebih dari 5 menit; status mungkin tidak aktual.' };
   if (a.value.flags?.irrigOff) return { tone: 'warn', text: 'Irigasi otomatis dimatikan di perangkat. Perintah manual tetap tersedia.' };
   if (irrigation.value?.holdReason) return { tone: 'warn', text: `Siklus irigasi ditahan: ${irrigation.value.holdReason}` };
+  if (state.lastData.tmeanFallback) return { tone: 'warn', text: 'ETc memakai suhu saat ini sampai Tmean 24 jam tersedia.' };
   return { tone: 'ok', text: 'Tidak ada peringatan aktuator.' };
 });
 
