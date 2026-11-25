@@ -399,11 +399,15 @@ export const actuators = computed(() => {
   };
 });
 
-export const actuatorModes = computed(() =>
-  state.lastData
-    ? { ...state.lastData.override }
-    : { mist: 'auto', irigasi: 'auto', blower: 'auto' },
-);
+export const actuatorModes = computed(() => {
+  if (!state.lastData) return { mist: 'auto', irigasi: 'auto', blower: 'auto' };
+  const modes = { ...state.lastData.override };
+  const ig = state.lastData.irrigation;
+  if (modes.irigasi === 'manual' && ig?.holdReason && !state.lastData.irigasi) {
+    modes.irigasi = 'auto';
+  }
+  return modes;
+});
 
 export const overrideSeconds = computed(() => {
   void state.now;
